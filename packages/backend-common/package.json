@@ -1,8 +1,8 @@
 {
-  "name": "backend-common",
+  "name": "@repo/backend-common",
   "version": "1.0.0",
   "main": "index.js",
-  "exports":{
+  "exports": {
     "./config": "./src/index.ts"
   },
   "scripts": {
@@ -14,5 +14,8 @@
   "description": "",
   "devDependencies": {
     "@repo/typescript-config": "workspace:*"
+  },
+  "dependencies": {
+    "@types/node": "^22.15.3"
   }
 }
