@@ -56,13 +56,7 @@ wss.on('connection', function connection(ws, request) {
          
          if(parsedData.type === "join_room") {
           const user = users.find(x => x.ws === ws);
-          user?.rooms.push(parsedData.roomId)
-          ws.send(
-            JSON.stringify({
-              type:"joined",
-              roomId: parsedData.roomId
-            })
-          )
+          user?.rooms.push(parsedData.roomId);
          }
 
          if(parsedData.type === "leave_room") {
@@ -82,8 +76,7 @@ wss.on('connection', function connection(ws, request) {
             if(user.rooms.includes(roomId)) {
               user.ws.send(JSON.stringify({
                 type: "chat",
-                 message,
-
+                 message:message,
                 roomId
               }))
             }
