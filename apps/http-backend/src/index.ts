@@ -72,7 +72,6 @@ app.post("/signin",async (req,res) =>{
 
 app.post("/room",middleware,async(req,res) =>{
 
-
       const parsedData = CreateRoomSchema.safeParse(req.body);
     if(!parsedData.success){
         return res.json({
@@ -96,6 +95,23 @@ app.post("/room",middleware,async(req,res) =>{
             message: "Room name alrady exits"
         })
       }
+})
+
+app.get("/chats/:roomId", async (req, res) => {
+    const roomId = Number(req.params.roomId);
+    const message = await prismaClient.chat.findMany({
+        where: {
+        roomId:roomId
+        },
+        orderBy: {
+            id:"desc"
+        },
+        take: 50
+    })
+
+    res.json({
+        message
+    })
 })
 
 app.listen(3001);
