@@ -12,6 +12,7 @@ export function ChatRoomClient({
 }) {
 
     const [chats, setChats] =useState(messages);
+    const [currentMessage, setCurrentMessage] = useState("");
     const {socket, loading} = useSocket();
 
     useEffect(() => {
@@ -29,10 +30,28 @@ export function ChatRoomClient({
                 }
             }
         }
+        return () => {
+            alert("closing")
+            socket?.close();
+        }
     }, [socket, loading,id])
 
     return <div>
-        {messages.map}
+        {messages.map( m => <div>{m.message}</div>)}
+
+        <input type="text" value={currentMessage} onChange={e => {
+            setCurrentMessage(e.target.value)
+        }}></input>
+
+        <button onClick={() => {
+            socket?.send(JSON.stringify({
+                type: "chat",
+                roomId: id,
+                messages: currentMessage
+            }))
+
+            setCurrentMessage("");
+        }}>Send Message</button>
     </div>
 
 } 
